@@ -1,4 +1,4 @@
-name: Build And Deploy MAIN-APP To Production Env
+name: Build And Deploy LOGIN-APP To Production Env
 on:
   push:
     tags:
