@@ -64,10 +64,8 @@ export default {
         if (data.state !== 1) {
           this.$message.error(data.message)
         } else {
-          // 记录状态，并且在访问需要登录的页面时候判断有没有登录状态
-          this.$store.commit('setUser', data.content)
-          // 跳转，及跳转到原来的页面
-          this.$router.push(this.$route.query.redirect || '/')
+          window.localStorage.setItem('user', data.content)
+          window.location.replace(process.env.NODE_ENV === 'production' ? '/' : '/main/qiankun-vue2-subapp/')
           this.$message.success('登录成功')
         }
       } catch (e) { // 接口报错message再次调用

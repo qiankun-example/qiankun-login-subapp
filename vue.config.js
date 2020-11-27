@@ -1,7 +1,7 @@
 const { name } = require('./package.json')
 /**@type{ import('@vue/cli-service').ProjectOptions} */
 module.exports = {
-  publicPath: '/main/login',
+  publicPath: process.env.NODE_ENV === 'production' ? 'login' : 'http://localhost:8000',
   outputDir: 'login',
   css: {
     loaderOptions: {

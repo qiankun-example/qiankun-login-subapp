@@ -14,9 +14,9 @@ let instance = null  // 实例
 
 // 2. 渲染
 function render(props = {}) {
-  const { container, routerBase } = props
+  const { container } = props
   const router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? routerBase : process.env.BASE_URL, // 集成乾坤路径及单项目路径
+    // base: window.__POWERED_BY_QIANKUN__ ? routerBase : process.env.BASE_URL, // 集成乾坤路径及单项目路径
     mode: 'history',
     routes
   })
