@@ -65,7 +65,7 @@ export default {
           this.$message.error(data.message)
         } else {
           window.localStorage.setItem('user', data.content)
-          window.location.replace(process.env.NODE_ENV === 'production' ? '/' : '/main/qiankun-vue2-subapp/')
+          window.location.replace(process.env.NODE_ENV === 'production' ? '/' : '/')
           this.$message.success('登录成功')
         }
       } catch (e) { // 接口报错message再次调用

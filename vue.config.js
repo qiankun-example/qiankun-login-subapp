@@ -1,14 +1,27 @@
 const { name } = require('./package.json')
 /**@type{ import('@vue/cli-service').ProjectOptions} */
+const cdn = {
+  dev: {
+    js: []
+  },
+  prd: {
+    js: [
+      // vue
+      '//cdn.bootcdn.net/ajax/libs/vue/2.6.10/vue.min.js'
+    ]
+  }
+}
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/login' : 'http://localhost:8000',
+  publicPath: process.env.NODE_ENV === 'production' ? '/login' : 'http://localhost:8002',
   outputDir: 'login',
-  css: {
-    loaderOptions: {
-      scss: {
-        additionalData: '@import "~@/styles/variables.scss";'
-      }
-    }
+  chainWebpack: config => {
+    config.plugins.delete('preload') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
+    config.plugin('html')
+      .tap(args => {
+        args[0].cdn = process.env.NODE_ENV === 'production' ? cdn.prd : cdn.dev
+        return args
+      })
   },
   configureWebpack: {
     output: {
@@ -17,6 +30,10 @@ module.exports = {
       libraryTarget: 'umd',
       jsonpFunction: `webpackJsonp_${name}`,
     },
+    externals: process.env.NODE_ENV === 'production' ?
+      {
+        vue: "Vue"
+      } : {}
   },
   devServer: {
     port: process.env.VUE_APP_PORT,
@@ -33,5 +50,6 @@ module.exports = {
         changeOrigin: true // 把请求头中host配置target
       }
     }
-  }
+  },
+  productionSourceMap: false
 }
